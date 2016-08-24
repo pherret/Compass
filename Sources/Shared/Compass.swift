@@ -6,7 +6,7 @@ public struct Compass {
   typealias Result = (route: String, arguments: [String: String],
     concreteMatchCount: Int, wildcardMatchCount: Int)
 
-  private static var internalScheme = ""
+  fileprivate static var internalScheme = ""
 
   public static var delimiter: String = ":"
 
@@ -17,18 +17,19 @@ public struct Compass {
 
   public static var routes = [String]()
 
-  public typealias ParseCompletion = (route: String, arguments: [String : String], fragments: [String : AnyObject]) -> Void
+  public typealias ParseCompletion = (_ route: String, _ arguments: [String : String], _ fragments: [String : AnyObject]) -> Void
+  
+  @discardableResult
+  public static func parse(_ url: URL, fragments: [String : AnyObject] = [:], completion: ParseCompletion) -> Bool {
 
-  public static func parse(url: NSURL, fragments: [String : AnyObject] = [:], completion: ParseCompletion) -> Bool {
+    let path = url.absoluteString.substring(from: scheme.endIndex)
 
-    let path = url.absoluteString.substringFromIndex(scheme.endIndex)
-
-    guard !(path.containsString("?") || path.containsString("#"))
+    guard !(path.contains("?") || path.contains("#"))
       else { return parseAsURL(url, completion: completion) }
 
     let results: [Result] = routes.flatMap {
       return findMatch($0, pathString: path)
-    }.sort { (r1: Result, r2: Result) in
+    }.sorted { (r1: Result, r2: Result) in
       if r1.concreteMatchCount == r2.concreteMatchCount {
         return r1.wildcardMatchCount > r2.wildcardMatchCount
       }
@@ -37,17 +38,17 @@ public struct Compass {
     }
 
     if let result = results.first {
-      completion(route: result.route, arguments: result.arguments, fragments: fragments)
+      completion(result.route, result.arguments, fragments)
       return true
     }
 
     return false
   }
 
-  static func parseAsURL(url: NSURL, completion: ParseCompletion) -> Bool {
+  static func parseAsURL(_ url: URL, completion: ParseCompletion) -> Bool {
     guard let route = url.host else { return false }
 
-    let urlComponents = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+    let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
 
     var arguments = [String : String]()
 
@@ -59,12 +60,12 @@ public struct Compass {
         arguments = fragment.queryParameters()
     }
 
-    completion(route: route, arguments: arguments, fragments: [:])
+    completion(route, arguments, [:])
 
     return true
   }
 
-  static func findMatch(routeString: String, pathString: String)
+  static func findMatch(_ routeString: String, pathString: String)
     -> Result? {
 
     let routes = routeString.split(delimiter)
@@ -78,7 +79,7 @@ public struct Compass {
 
     for (route, path) in zip(routes, paths) {
       if route.hasPrefix("{") {
-        let key = route.replace("{", with: "").replace("}", with: "")
+        let key = route.replacingOccurrences(of: "{", with: "").replacingOccurrences(of: "}", with: "")
         arguments[key] = path
 
         wildcardMatchCount += 1
@@ -102,14 +103,14 @@ private extension String {
     func queryParameters() -> [String: String] {
         var parameters = [String: String]()
 
-        let separatorCharacters = NSCharacterSet(charactersInString: "&;")
-        self.componentsSeparatedByCharactersInSet(separatorCharacters).forEach { (pair) in
+        let separatorCharacters = CharacterSet(charactersIn: "&;")
+        self.components(separatedBy: separatorCharacters).forEach { (pair) in
 
-            if let equalSeparator = pair.rangeOfString("=") {
-                let name = pair.substringToIndex(equalSeparator.startIndex)
-                let value = pair.substringFromIndex(equalSeparator.startIndex.advancedBy(1))
-                let cleaned = value.stringByRemovingPercentEncoding ?? value
-
+            if let equalSeparator = pair.range(of: "=") {
+                let name = pair.substring(to: equalSeparator.lowerBound)
+                let value = pair.substring(from: equalSeparator.upperBound)
+                let cleaned = value.removingPercentEncoding ?? value
+                
                 parameters[name] = cleaned
             }
         }
