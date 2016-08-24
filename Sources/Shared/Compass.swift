@@ -21,7 +21,7 @@ public struct Compass {
 
   public static func parse(url: NSURL, fragments: [String : AnyObject] = [:], completion: ParseCompletion) -> Bool {
 
-    let path = url.absoluteString.substringFromIndex(scheme.endIndex)
+    let path = url.absoluteString!.substringFromIndex(scheme.endIndex)
 
     guard !(path.containsString("?") || path.containsString("#"))
       else { return parseAsURL(url, completion: completion) }
