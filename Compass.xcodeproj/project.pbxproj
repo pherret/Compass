@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA82BF331D7FD7DF002AED81 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA82BF321D7FD7DF002AED81 /* Util.swift */; };
 		D5361FF41D6C7133003C3EE8 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5361FEF1D6C7133003C3EE8 /* Router.swift */; };
 		D5361FF51D6C7133003C3EE8 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5361FEF1D6C7133003C3EE8 /* Router.swift */; };
 		D5361FF81D6C7133003C3EE8 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5361FF11D6C7133003C3EE8 /* TypeAlias.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA82BF321D7FD7DF002AED81 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		D5361FEF1D6C7133003C3EE8 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D5361FF11D6C7133003C3EE8 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 		D5361FF21D6C7133003C3EE8 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				D5361FF21D6C7133003C3EE8 /* String+Extensions.swift */,
 				D5361FF31D6C7133003C3EE8 /* Compass.swift */,
 				D536202B1D6C8532003C3EE8 /* Location.swift */,
+				AA82BF321D7FD7DF002AED81 /* Util.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5361FFC1D6C7133003C3EE8 /* Compass.swift in Sources */,
+				AA82BF331D7FD7DF002AED81 /* Util.swift in Sources */,
 				D5361FFA1D6C7133003C3EE8 /* String+Extensions.swift in Sources */,
 				D5361FF81D6C7133003C3EE8 /* TypeAlias.swift in Sources */,
 				D5361FF41D6C7133003C3EE8 /* Router.swift in Sources */,
@@ -430,6 +434,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -471,6 +476,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
